@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "731403295358",
+    "project_id": "my-college-app-3e486",
+    "storage_bucket": "my-college-app-3e486.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:731403295358:android:c48f625afa495ef59bd62f",
+        "android_client_info": {
+          "package_name": "com.shivam.collegeadminapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "731403295358-9hea08q1rs9r01jhp9fal1pl58sprecd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhE3JTzCUHnhD9TjQ6KhFqDWs4NlH7EX8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "731403295358-9hea08q1rs9r01jhp9fal1pl58sprecd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
