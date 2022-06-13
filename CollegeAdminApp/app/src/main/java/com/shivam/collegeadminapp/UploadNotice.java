@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
@@ -28,6 +30,8 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class UploadNotice extends AppCompatActivity {
 
@@ -40,6 +44,7 @@ public class UploadNotice extends AppCompatActivity {
     private DatabaseReference reference;
     private StorageReference storageReference;
     String downloadUrl="";
+    private ProgressDialog pd;
 
 
     @Override
@@ -49,6 +54,8 @@ public class UploadNotice extends AppCompatActivity {
 
         reference= FirebaseDatabase.getInstance().getReference();
         storageReference= FirebaseStorage.getInstance().getReference();
+
+        pd=new ProgressDialog(this);
         addImage=findViewById(R.id.addImage);
         noticeImageView=findViewById(R.id.noticeImageView);
         noticeTitle=findViewById(R.id.noticeTitle);
@@ -81,6 +88,8 @@ public class UploadNotice extends AppCompatActivity {
 
 
     private void uploadImage() {
+        pd.setMessage("Uploading......");
+        pd.show();
         ByteArrayOutputStream baos=new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG,50,baos);
         byte[] finalimg=baos.toByteArray();
@@ -104,6 +113,7 @@ public class UploadNotice extends AppCompatActivity {
                         }
                     });
                 }else{
+                    pd.dismiss();
                     Toast.makeText(UploadNotice.this,"Something went wrong",Toast.LENGTH_SHORT).show();
                 }
             }
@@ -111,7 +121,35 @@ public class UploadNotice extends AppCompatActivity {
     }
 
     private void uploadData() {
-        
+        reference=reference.child("Notice");
+        final String uniqueKey=reference.push().getKey();
+
+        String title=noticeTitle.getText().toString();
+
+        Calendar calForDate=Calendar.getInstance();
+        SimpleDateFormat currentDate=new SimpleDateFormat("dd-MM-yy");
+        String date= currentDate.format(calForDate.getTime());
+
+        Calendar calForTime=Calendar.getInstance();
+        SimpleDateFormat currentTime= new SimpleDateFormat("hh:mm a");
+        String time=currentTime.format(calForTime.getTime());
+
+        NoticeData noticeData=new NoticeData(title,downloadUrl,date,time,uniqueKey);
+
+        reference.child(uniqueKey).setValue(noticeData).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                    pd.dismiss();
+                    Toast.makeText(UploadNotice.this,"Notice Uploded",Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                    pd.dismiss();
+                    Toast.makeText(UploadNotice.this,"Smoething went wrong",Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private void openGallery() {
