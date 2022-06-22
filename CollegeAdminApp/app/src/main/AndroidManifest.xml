@@ -13,6 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CollegeAdminApp">
         <activity
+            android:name=".AddTeacher"
+            android:exported="false" />
+        <activity
+            android:name=".UpdateFaculty"
+            android:exported="false" />
+        <activity
             android:name=".UploadPdf"
             android:exported="false" />
         <activity
