@@ -9,7 +9,7 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    CardView uploadNotice,addGalleryImage,addEbook,faculty;
+    CardView uploadNotice,addGalleryImage,addEbook,faculty,deleteNotice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,11 +20,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         addGalleryImage=findViewById(R.id.addGalleryImage);
         addEbook=findViewById(R.id.addEbook);
         faculty=findViewById(R.id.faculty);
+        deleteNotice=findViewById(R.id.deleteNotice);
 
         uploadNotice.setOnClickListener(this);
         addGalleryImage.setOnClickListener(this);
         addEbook.setOnClickListener(this);
         faculty.setOnClickListener(this);
+        deleteNotice.setOnClickListener(this);
     }
 
     @Override
@@ -45,6 +47,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.faculty:
                 intent=new Intent(MainActivity.this, UpdateFaculty.class);
+                startActivity(intent);
+                break;case R.id.deleteNotice:
+                intent=new Intent(MainActivity.this, DeleteNotice.class);
                 startActivity(intent);
                 break;
         }
