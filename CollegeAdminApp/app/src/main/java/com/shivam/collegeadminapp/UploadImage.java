@@ -147,6 +147,9 @@ public class UploadImage extends AppCompatActivity {
             public void onSuccess(Void unused) {
                 pd.dismiss();
                 Toast.makeText(UploadImage.this,"Image Uploaded successfully...",Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(UploadImage.this,UploadImage.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
 
             }
         }).addOnFailureListener(new OnFailureListener() {
